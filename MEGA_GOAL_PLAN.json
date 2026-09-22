@@ -1,0 +1,161 @@
+{
+  "project": "Project Forge",
+  "source_path": "PROJECT",
+  "created_at": 1790096872.0302663,
+  "milestones": [
+    {
+      "id": "select-project",
+      "title": "Select strong portfolio project",
+      "description": "Choose one substantial project from the wider portfolio (e.g., Space Game Engine, FaultLab, Exoplanet Hunter, scientific tools, systems software, AI infrastructure, engineering simulations) that is technically impressive and justifies a dedicated repository. Document the choice and rationale in a file like `docs/project-selection.md` at the repo root (create the repo first).",
+      "verify": "test -f docs/project-selection.md && grep -q 'rationale' docs/project-selection.md",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [],
+      "status": "done"
+    },
+    {
+      "id": "define-completion-criteria",
+      "title": "Define measurable completion criteria",
+      "description": "Write a `docs/completion-criteria.md` file in the repo root that lists specific, measurable, verifiable completion criteria for the selected project (e.g., 'all tests pass', 'benchmark X achieves Y', 'setup works from clean clone'). Ensure criteria are concrete and testable by an automated agent.",
+      "verify": "test -f docs/completion-criteria.md && grep -q 'criteria' docs/completion-criteria.md",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "select-project"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "create-private-repo",
+      "title": "Create private GitHub repository",
+      "description": "Initialize a new private GitHub repository for the selected project (e.g., via `gh repo create <name> --private`). Set up the local git repo, add a `.gitignore`, and push the initial commit with the selection and criteria docs. The repo must be private; do not publish publicly yet.",
+      "verify": "gh repo view --json isPrivate --jq '.isPrivate' | grep -q 'true'",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "define-completion-criteria"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "build-core-functionality",
+      "title": "Build core functionality",
+      "description": "Implement the core functionality of the selected project in the repo's source directory (e.g., `src/`). Write real, non-trivial code that matches the project's purpose (e.g., a game engine loop, a fault-injection harness, an exoplanet detection algorithm). Ensure it compiles/runs and performs a meaningful task. Add a `README.md` with a brief overview.",
+      "verify": "test -f README.md && test -d src && find src -name '*.py' -o -name '*.rs' -o -name '*.go' -o -name '*.ts' | grep -q .",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "create-private-repo"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "add-tests",
+      "title": "Add comprehensive tests",
+      "description": "Write a test suite for the core functionality in a `tests/` directory (or language-appropriate location). Tests must cover the main features and edge cases. Ensure tests can be run with a single command (e.g., `pytest`, `cargo test`, `go test`). Add a `Makefile` or script `run_tests.sh` to run them.",
+      "verify": "test -f run_tests.sh && bash run_tests.sh",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "build-core-functionality"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "add-benchmarks",
+      "title": "Add benchmarks where appropriate",
+      "description": "Create a `benchmarks/` directory with reproducible benchmark scripts or binaries that measure the project's performance (e.g., FPS, latency, throughput, accuracy). Add a `benchmarks/README.md` explaining how to run them and what they measure. Ensure benchmarks run successfully.",
+      "verify": "test -f benchmarks/README.md && test -d benchmarks && ls benchmarks/*.py benchmarks/*.rs benchmarks/*.sh 2>/dev/null | grep -q .",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "add-tests"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "produce-demo",
+      "title": "Produce demo and example usage",
+      "description": "Create a `demo/` directory with a runnable demo or example that showcases the project's key features. Add a `demo/README.md` with step-by-step instructions and expected output. Ensure the demo runs successfully from a clean environment.",
+      "verify": "test -f demo/README.md && test -d demo && ls demo/*.py demo/*.rs demo/*.sh 2>/dev/null | grep -q .",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "add-benchmarks"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "code-review",
+      "title": "Perform code review and fix issues",
+      "description": "Review the entire codebase for quality, correctness, and adherence to the project's design. Fix any bugs, improve code structure, and ensure consistency. Add a `docs/design-decisions.md` file documenting key design choices and trade-offs. Run the test suite again to confirm everything passes.",
+      "verify": "test -f docs/design-decisions.md && bash run_tests.sh",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "produce-demo"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "improve-docs",
+      "title": "Improve documentation",
+      "description": "Enhance the README with a strong overview, architecture docs in `docs/architecture.md`, setup instructions, limitations, roadmap, and reproducible results. Add a `LICENSE` file (choose an appropriate open-source license). Ensure all docs are accurate and complete.",
+      "verify": "test -f README.md && test -f docs/architecture.md && test -f LICENSE && grep -q 'setup' README.md && grep -q 'roadmap' README.md",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "code-review"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "verify-clean-setup",
+      "title": "Verify clean setup elsewhere",
+      "description": "Simulate a clean environment (e.g., in a fresh directory or container) and follow the setup instructions from the README to ensure the project builds and runs from scratch. Fix any issues found. Add a `docs/verification.md` file documenting the verification steps and results.",
+      "verify": "test -f docs/verification.md && grep -q 'clean' docs/verification.md",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "improve-docs"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "prepare-release",
+      "title": "Prepare release and clean commit history",
+      "description": "Ensure the git commit history is clean and meaningful (squash or reword as needed). Tag the release version (e.g., `v1.0.0`). Add a `CHANGELOG.md` summarizing changes. Ensure the repo is in a presentable state for potential publication.",
+      "verify": "git log --oneline | head -n 5 | grep -q '.' && git tag | grep -q 'v' && test -f CHANGELOG.md",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "verify-clean-setup"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "ask-jasper-before-publication",
+      "title": "Ask Jasper for publication approval",
+      "description": "Prepare a publication request for Jasper, including a summary of the project, its quality, and a link to the private repo. Present this request to Jasper and wait for his explicit approval before making the repo public. Do not publish without approval.",
+      "verify": "test -f docs/publication-request.md && grep -q 'approval' docs/publication-request.md",
+      "requires_human": true,
+      "human_reason": "Jasper must explicitly approve making the repository public, as per Project Forge's rules.",
+      "depends_on": [
+        "prepare-release"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "publish-repo",
+      "title": "Publish repository publicly",
+      "description": "After Jasper's approval, make the GitHub repository public (e.g., via `gh repo edit --visibility public`). Verify the repo is public and the README, docs, and code are accessible. Add a note in `docs/publication-request.md` confirming the publication date.",
+      "verify": "gh repo view --json isPrivate --jq '.isPrivate' | grep -q 'false'",
+      "requires_human": false,
+      "human_reason": "",
+      "depends_on": [
+        "ask-jasper-before-publication"
+      ],
+      "status": "pending"
+    }
+  ]
+}
