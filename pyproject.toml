@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stellarforge"
+version = "0.1.0"
+description = "An N-body gravitational simulation engine using the Barnes-Hut algorithm"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest", "numpy"]
