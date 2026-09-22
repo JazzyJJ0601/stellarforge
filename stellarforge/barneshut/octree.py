@@ -158,7 +158,7 @@ class Octree:
         dist_sq = dx * dx + dy * dy + dz * dz + softening * softening
         dist = dist_sq ** 0.5
 
-        if dist / node.size > theta or (node.body is not None and all(
+        if node.size / max(dist, 1e-15) < theta or (node.body is not None and all(
             c is None for c in node.children
         )):
             # Treat as single point mass
@@ -179,14 +179,6 @@ class Octree:
                 )
         return total_accel
 
-    def _body_in_subtree(self, node: OctreeNode, body_id: int) -> bool:
-        """Check if a body with given ID is in this subtree."""
-        if node is None:
-            return False
-        if node.body is not None and node.body.id == body_id:
-            return True
-        return any(self._body_in_subtree(c, body_id) for c in node.children if c is not None)
-
     def compute_accelerations(
         self,
         bodies: list[Body],
@@ -194,23 +186,12 @@ class Octree:
         G: float = 1.0,
         softening: float = 1e-3,
     ) -> dict[int, tuple[float, float, float]]:
-        """Compute gravitational acceleration for each body."""
+        """Compute gravitational acceleration for each body using Barnes-Hut."""
         result = {}
         for b in bodies:
-            accel = (0.0, 0.0, 0.0)
-            for child in self.root.children:
-                if child is not None:
-                    # Skip the child containing this body to avoid self-force
-                    if self._body_in_subtree(child, b.id):
-                        continue
-                    child_accel = self._compute_acceleration_from_node(
-                        b, child, theta, G, softening
-                    )
-                    accel = (
-                        accel[0] + child_accel[0],
-                        accel[1] + child_accel[1],
-                        accel[2] + child_accel[2],
-                    )
+            accel = self._compute_acceleration_from_node(
+                b, self.root, theta, G, softening
+            )
             result[b.id] = accel
         return result
 
