@@ -144,16 +144,23 @@ class Octree:
         G: float,
         softening: float,
     ) -> tuple[float, float, float]:
-        """Compute acceleration on a body from a node using Barnes-Hut."""
+        """Compute acceleration on a body from a node using Barnes-Hut.
+        
+        If the target body is in a leaf node, skip it to avoid self-force.
+        """
+        # If this is a leaf with the target body, skip it (self-force)
+        if node.body is not None and all(c is None for c in node.children) and node.body.id == body.id:
+            return (0.0, 0.0, 0.0)
+        
         dx = node.center_of_mass[0] - body.position[0]
         dy = node.center_of_mass[1] - body.position[1]
         dz = node.center_of_mass[2] - body.position[2]
         dist_sq = dx * dx + dy * dy + dz * dz + softening * softening
         dist = dist_sq ** 0.5
 
-        if dist / node.size > theta or node.body is not None and all(
+        if dist / node.size > theta or (node.body is not None and all(
             c is None for c in node.children
-        ):
+        )):
             # Treat as single point mass
             force = G * node.mass / (dist_sq * dist)
             return (dx * force, dy * force, dz * force)
@@ -172,6 +179,14 @@ class Octree:
                 )
         return total_accel
 
+    def _body_in_subtree(self, node: OctreeNode, body_id: int) -> bool:
+        """Check if a body with given ID is in this subtree."""
+        if node is None:
+            return False
+        if node.body is not None and node.body.id == body_id:
+            return True
+        return any(self._body_in_subtree(c, body_id) for c in node.children if c is not None)
+
     def compute_accelerations(
         self,
         bodies: list[Body],
@@ -185,6 +200,9 @@ class Octree:
             accel = (0.0, 0.0, 0.0)
             for child in self.root.children:
                 if child is not None:
+                    # Skip the child containing this body to avoid self-force
+                    if self._body_in_subtree(child, b.id):
+                        continue
                     child_accel = self._compute_acceleration_from_node(
                         b, child, theta, G, softening
                     )
@@ -195,3 +213,25 @@ class Octree:
                     )
             result[b.id] = accel
         return result
+
+
+def brute_force_accelerations(bodies: list[Body], G: float = 1.0, softening: float = 1e-3) -> dict[int, tuple[float, float, float]]:
+    """Compute gravitational acceleration using brute-force O(n²) summation."""
+    result = {}
+    n = len(bodies)
+    for i, b in enumerate(bodies):
+        accel = [0.0, 0.0, 0.0]
+        for j in range(n):
+            if i == j:
+                continue
+            dx = bodies[j].position[0] - b.position[0]
+            dy = bodies[j].position[1] - b.position[1]
+            dz = bodies[j].position[2] - b.position[2]
+            dist_sq = dx*dx + dy*dy + dz*dz + softening*softening
+            dist = dist_sq ** 0.5
+            force = G * bodies[j].mass / (dist_sq * dist)
+            accel[0] += dx * force
+            accel[1] += dy * force
+            accel[2] += dz * force
+        result[b.id] = tuple(accel)
+    return result

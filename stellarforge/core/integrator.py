@@ -14,15 +14,21 @@ class Integrator(Protocol):
 class LeapfrogIntegrator:
     """Leapfrog integrator using kick-drift-kick scheme."""
 
-    def step(self, bodies: list[Body], dt: float) -> list[Body]:
-        """Advance the system by dt using kick-drift-kick."""
+    def step(self, bodies: list[Body], dt: float, G: float = 1.0, softening: float = 1e-3) -> list[Body]:
+        """Advance the system by dt using kick-drift-kick.
+        
+        Args:
+            bodies: List of Body objects to integrate.
+            dt: Time step.
+            G: Gravitational constant (default 1.0).
+            softening: Softening parameter to prevent singularities (default 1e-3).
+        """
         n = len(bodies)
         if n == 0:
             return bodies
 
         # Compute accelerations using direct sum O(n²)
         accel = [(0.0, 0.0, 0.0) for _ in range(n)]
-        G = 1.0
 
         for i in range(n):
             for j in range(n):
@@ -32,7 +38,7 @@ class LeapfrogIntegrator:
                 dy = bodies[j].position[1] - bodies[i].position[1]
                 dz = bodies[j].position[2] - bodies[i].position[2]
                 dist_sq = dx * dx + dy * dy + dz * dz
-                force = G * bodies[j].mass / (dist_sq ** 1.5)
+                force = G * bodies[j].mass / ((dist_sq + softening**2) ** 1.5)
                 accel[i] = (
                     accel[i][0] + dx * force,
                     accel[i][1] + dy * force,
