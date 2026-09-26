@@ -96,7 +96,7 @@
       "depends_on": [
         "produce-demo"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "improve-docs",
