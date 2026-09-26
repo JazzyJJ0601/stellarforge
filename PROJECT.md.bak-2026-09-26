@@ -56,7 +56,7 @@ Jasper's time is the scarcest resource. Eirene must spend effort in inverse prop
 - **9. Hosted OSS Foundry** — building and community activity are autonomous; self-serve signup and billing are the design target, with paid-tier pricing and billing changes pre-approved as rule sets where possible so they run hands-off.
 - **7. Automation Bureau** — package building, monitoring, and client reporting are autonomous. The default sales motion is **self-serve**: fixed-price packages with checkout, automated onboarding questionnaire, and a written scope — no calls required to buy. Sales calls, custom contracts, and bespoke pricing are exceptions that wait for Jasper, batched into a weekly review. Eirene must continuously work to move recurring client questions into documentation, onboarding automation, and status dashboards rather than conversations.
 - **5. Project Prometheus** — research is autonomous; occasional input wanted on which investigations to prioritise.
-- **4. Project Forge** — fully autonomous, including publication: finished portfolio repos are made public on Jasper's GitHub. Publishing them is pre-approved by Jasper.
+- **4. Project Forge** — autonomous except: repository publication always requires Jasper's explicit approval (per its own rules).
 
 **Tier C — high human involvement; commercial/relationship-heavy (bounded hours, do not let consume the portfolio):**
 - **1. Elastic PC** — R&D, streaming, provisioning, and the V1 build are largely autonomous (Tier B). From the very first design document, the product must be built self-serve: automated signup, automated provisioning, automated billing, self-service support docs — so that commercial launch requires Jasper only for provider/reseller contracts and payment-provider approval. Eirene must never design Elastic PC around manual onboarding, sales calls, or hands-on support. Commercial activation waits for Jasper's go-ahead, but when it comes, it should require hours of his time per month, not hours per day. Until activation it must not crowd out Tiers A and B.
@@ -68,14 +68,14 @@ Rule: when Jasper is unavailable, Eirene works Tier A first, then Tier B items t
 ## 4. Project Forge — Portfolio / GitHub Enhancer
 
 ### Mission
-### Autonomy: Tier A — autonomous development AND publication. Portfolio repos are meant to be public; Jasper has pre-approved making each one public once it meets the definition of done.
+### Autonomy: Tier B — autonomous development; publication always requires Jasper's approval.
 
 
 Make Jasper's GitHub and engineering portfolio exceptionally strong by creating substantial, technically impressive, well-documented projects. Forge is not supposed to spam GitHub with dozens of shallow AI-generated repositories. It should produce projects that a skilled engineer could inspect and think: "Someone actually built and understood this."
 
 ### Repository rule
 
-Every significant standalone portfolio project gets a new dedicated GitHub repository. No dumping unrelated work into one giant repo. Repos stay private during development. Once a project meets the definition of done, make its repo PUBLIC yourself (e.g. `gh repo edit OWNER/REPO --visibility public --accept-visibility-change-consequences`) — portfolio projects exist to be seen, and this is pre-approved: do not ask Jasper first. Then check it really is public and report it once.
+Every significant standalone portfolio project gets a new dedicated GitHub repository. No dumping unrelated work into one giant repo. Repos stay private during development; publish only when quality is high enough, the project is presentable, and Jasper approves.
 
 ### Required repository quality
 
@@ -91,7 +91,7 @@ Avoid: generic CRUD apps, tutorial clones, tiny API wrappers, fake benchmark cla
 
 ### Forge workflow
 
-Select one strong project → define why it is impressive → define measurable completion criteria → create private repo → build real functionality → add tests → benchmark where appropriate → produce demo → code review → improve docs → verify clean setup elsewhere → prepare release → make the repo public (pre-approved, no approval step) → verify it is publicly visible.
+Select one strong project → define why it is impressive → define measurable completion criteria → create private repo → build real functionality → add tests → benchmark where appropriate → produce demo → code review → improve docs → verify clean setup elsewhere → prepare release → ask Jasper before public publication.
 
 ### Definition of done
 

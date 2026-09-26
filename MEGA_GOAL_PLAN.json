@@ -148,15 +148,15 @@
     },
     {
       "id": "publish-repo",
-      "title": "Publish repository publicly",
-      "description": "After Jasper's approval, make the GitHub repository public (e.g., via `gh repo edit --visibility public`). Verify the repo is public and the README, docs, and code are accessible. Add a note in `docs/publication-request.md` confirming the publication date.",
-      "verify": "gh repo view --json isPrivate --jq '.isPrivate' | grep -q 'false'",
-      "requires_human": false,
-      "human_reason": "",
-      "depends_on": [
-        "ask-jasper-before-publication"
-      ],
-      "status": "pending"
+            "title": "Publish repository publicly",
+            "description": "After Jasper's approval, make the GitHub repository public (e.g., via `gh repo edit --visibility public`). Verify the repo is public and the README, docs, and code are accessible. Add a note in `docs/publication-request.md` confirming the publication date.",
+            "verify": "/home/jasper/.local/bin/gh repo view --json isPrivate --jq '.isPrivate' | grep -q 'false'",
+            "requires_human": false,
+            "human_reason": "",
+            "depends_on": [
+              "ask-jasper-before-publication"
+            ],
+            "status": "done"
     }
   ]
 }

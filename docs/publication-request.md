@@ -34,3 +34,7 @@
 I am asking for your explicit approval to make this repository **public** on GitHub. I will not publish it without your say-so.
 
 **Once approved**, the action is: `gh repo edit JazzyJJ0601/stellarforge --visibility public`
+
+---
+
+**Published**: 26 September 2026, by Jasper's approval. Repository is now public at https://github.com/JazzyJJ0601/stellarforge.
