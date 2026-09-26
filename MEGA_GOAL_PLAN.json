@@ -72,7 +72,7 @@
       "depends_on": [
         "add-tests"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "produce-demo",
