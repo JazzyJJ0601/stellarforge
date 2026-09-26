@@ -29,13 +29,13 @@
       "id": "create-private-repo",
       "title": "Create private GitHub repository",
       "description": "Initialize a new private GitHub repository for the selected project (e.g., via `gh repo create <name> --private`). Set up the local git repo, add a `.gitignore`, and push the initial commit with the selection and criteria docs. The repo must be private; do not publish publicly yet.",
-      "verify": "gh repo view --json isPrivate --jq '.isPrivate' | grep -q 'true'",
+      "verify": "/home/jasper/.local/bin/gh repo view --json isPrivate --jq '.isPrivate' | grep -q 'true'",
       "requires_human": false,
       "human_reason": "",
       "depends_on": [
         "define-completion-criteria"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "build-core-functionality",
@@ -157,5 +157,6 @@
       ],
       "status": "pending"
     }
-  ]
+  ],
+  "project_description": "Builds a small number of deep, technically impressive open-source portfolio projects (not shallow AI-spam repos) to make Jasper's GitHub look genuinely strong -- publishing only with his approval."
 }
