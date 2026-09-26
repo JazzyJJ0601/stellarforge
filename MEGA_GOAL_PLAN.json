@@ -60,7 +60,7 @@
       "depends_on": [
         "build-core-functionality"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "add-benchmarks",
