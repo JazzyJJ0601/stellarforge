@@ -132,7 +132,7 @@
       "depends_on": [
         "verify-clean-setup"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "ask-jasper-before-publication",
@@ -144,7 +144,7 @@
       "depends_on": [
         "prepare-release"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "publish-repo",
