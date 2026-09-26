@@ -84,7 +84,7 @@
       "depends_on": [
         "add-benchmarks"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "code-review",
