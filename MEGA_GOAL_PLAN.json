@@ -120,7 +120,7 @@
       "depends_on": [
         "improve-docs"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "prepare-release",
