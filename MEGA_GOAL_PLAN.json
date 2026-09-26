@@ -108,7 +108,7 @@
       "depends_on": [
         "code-review"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "verify-clean-setup",
