@@ -2,6 +2,7 @@
   "project": "Project Forge",
   "source_path": "PROJECT",
   "created_at": 1790096872.0302663,
+  "project_description": "Builds a small number of deep, technically impressive open-source portfolio projects (not shallow AI-spam repos) to make Jasper's GitHub look genuinely strong -- publishing only with his approval.",
   "milestones": [
     {
       "id": "select-project",
@@ -47,7 +48,7 @@
       "depends_on": [
         "create-private-repo"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "add-tests",
@@ -157,6 +158,5 @@
       ],
       "status": "pending"
     }
-  ],
-  "project_description": "Builds a small number of deep, technically impressive open-source portfolio projects (not shallow AI-spam repos) to make Jasper's GitHub look genuinely strong -- publishing only with his approval."
+  ]
 }
